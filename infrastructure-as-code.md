@@ -150,5 +150,11 @@ with the output:
 
 PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!
 
+## db
 
+to get a PONG from the db we need to add a line to the hosts file:
+```
+[db]
+192.168.33.11 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
+```
 
