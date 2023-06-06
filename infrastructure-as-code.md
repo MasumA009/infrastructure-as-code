@@ -6,17 +6,22 @@ A way of creating and maanging computer systems through specilised code. instead
 # Ansible:
 Ansible is a suite of software tools that enables infrastructure as code.
 
-Agentless: the software only needs to be installed on the master node, (controller). This makes it agentless. there is no need to install ansible on eevry device. 
 
 ![Alt text](images/Infrastructure-as-code-diagram-57-1024x783.jpg)
 
-In the diagram the user writes code which is then saved, stored and monitored throgh version control, it is then pushed to an automation server, and then managed and sent it to different architectures. It could be put on the cloud or to an on premises aritecture. 
+In the diagram the user writes code which is then saved, stored and monitored through version control, it is then pushed to an automation server, and then managed and sent it to different architectures. It could be put on the cloud or to an on premises aritecture. 
+
+(Read more here)[https://www.clickittech.com/devops/infrastructure-as-code-tools/]
 
 How is it powerful/ useful? we can create and control as many nodes as we please through the controller. 
 
 How is it simple? we only need to deal with the controller node, not every indivual node. 
 
+Agentless: the software only needs to be installed on the master node, (controller). This makes it agentless. there is no need to install ansible on eevry device. 
+
 ## Example (plan):
+
+The best way ti understand it is to explauin it through an example, 
 
 ![Alt text](images/Screenshot%202023-06-05%20135625.png)
 
@@ -126,7 +131,9 @@ we can run Just `"Tree"` to see it in a different layout:
 
 # Step 5: change hosts file
 
-once in the correct directory, we can run the following to get into the hosts file to modify it:
+We can check connectivity between hosts/ nodes throgh using the `ping` command, if there is a successful connection established, it should return with `pong`. To do this follow:
+
+once in the correct directory (`/etc/ansible`), we can run the following to get into the hosts file to modify it:
 ```
 sudo nano hosts
 ```
@@ -148,7 +155,7 @@ with the output:
 
 ![Alt text](images/Screenshot%202023-06-05%20151232.png)
 
-PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!PONG!
+PONG!
 
 ## db
 
