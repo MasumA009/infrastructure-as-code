@@ -21,7 +21,7 @@ Agentless: the software only needs to be installed on the master node, (controll
 
 ## Example (plan):
 
-The best way ti understand it is to explauin it through an example, 
+The best way to understand it is to explauin it through an example, 
 
 ![Alt text](images/Screenshot%202023-06-05%20135625.png)
 
