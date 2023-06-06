@@ -101,6 +101,12 @@ sudo apt upgrade -y
 
 ![Alt text](images/Screenshot%202023-06-05%20150044.png)
 
+update and upgrade the controller again.
+
+### Check hosts
+
+go into each vm to check if it asks you to add to the known hosts. 
+
 # step 3: install ansible
 
 naviagte to the controller in the terminal and run:
@@ -182,15 +188,154 @@ to get a PONG from the db we need to add a line to the hosts file:
 192.168.33.11 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 ```
 
+![Alt text](images/Screenshot%202023-06-06%20124306.png)
 
-# 
+### NOTE
+if it does not work, we need to go into the ansible.cfg file and change something:
+Look for this and uncomment it:
+![Alt text](images/Screenshot%202023-06-06%20124454.png)
+
+Also, copy the line and place is under `ssh`:
+
+![Alt text](images/Screenshot%202023-06-06%20124605.png)
+
+# adhoc commands
+
+we can use these commands to find data about our nodes, some examples are:
+
+`sudo ansible db -a "date"` - shows date
+`sudo ansible db -a "free -m"` - shows free memory
+`sudo ansible all -a "la -a"`  - shows all files from all nodes
+`sudo ansible db -m copy -a "src=/etc/ansible/test1.txt dest=/home/vagrant` - copies file from a source to a destination
+
+(more can be found here)[https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html]
+
+## Creating playbook
+
+This playbook will be used to launch nginx.
+
+make sure you are in the correct location `/etc/ansible`. then to create a file use:
 ```
-sudo ansible db -a "uname -a"
+sudo nano config_nginx_web.yml
 ```
+
+here is my file:
 ```
- sudo ansible db -a "date"
-```
-gives date
+# this is a playbook to install nginx in the web-server
+# indentation matters have 2  spaces
+# add 3 dashes "---" this starts the yaml file.
+---
+# add name of host 
+- hosts: web
 
 
+# optional:
+# gather additional facts about setup:
+  gather_facts: yes
+
+
+# add admin access to this file (stops us from having to add sudo to every line)
+  become: true
+
+# add instructions/TASKS to add and install nginx
+  tasks:
+  - name: Installing Nginx
+    apt: pkg=nginx state=present
+
+# install nginx and enable nginx - ensure status is running.
+```
+
+to run the file, ensure your in the correct directory and run:
+```
+sudo ansible-playbook config_nginx_web.yml
+```
+![Alt text](images/Screenshot%202023-06-06%20133524.png)
+
+![Alt text](images/Screenshot%202023-06-06%20133614.png)
+
+## Playbook for nodejs
+
+
+Update all vms via:
+```
+sudo apt update -y 
+sudo apt upgrade -y
+```
+web: `ssh vagrant@192.168.33.10`
+db: `ssh vagrant@192.168.33.11`
+and controller: `vagrant ssh controller` or `exit`.
+
+we can check by connecting to the controller.
+
+in order to copy over the app folder
+
+run:
+```
+sudo apt update
+sudo apt install git
+sudo git clone https://github.com/MasumA009/app.git 
+```
+
+now to copy the file into the correct directory:
+```
+sudo ansible web -m copy -a "src=/etc/ansible/app dest=/home/vagrant"
+```
+
+now create a new file and input the code:
+```
+sudo nano db_playbook.yml
+```
+
+
+```
+- hosts: web
+  gather_facts: yes
+  become: true
+  tasks:
+    - name: Installing Nginx
+      apt: 
+        pkg: nginx 
+        state: present
+
+    - name: Add Node.js PPA
+      shell: "curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -"
+      args:
+        warn: no
+
+    - name: Install Node.js
+      apt:
+        name: nodejs
+        update_cache: yes
+        state: present
+
+    - name: Install npm
+      apt:
+        name: npm
+        state: present
+
+    - name: Install npm packages
+      command:
+        cmd: npm install
+        chdir: /home/vagrant/app
+      become_user: vagrant
+
+    - name: Start the npm application
+      shell:
+        cmd: nohup npm start > /dev/null 2>&1 &
+        chdir: /home/vagrant/app
+      become_user: vagrant
+
+    - name: Restart nginx service
+      service:
+        name: nginx
+        state: restarted
+
+
+```
+run it through:
+```
+sudo ansible-playbook db_playbook.yml
+```
+
+![Alt text](images/Screenshot%202023-06-06%20174618.png)
 

@@ -20,7 +20,8 @@
     controller.vm.network :private_network, ip: "192.168.33.12"
     
     #config.hostsupdater.aliases = ["development.controller"] 
-    
+    #controller.vm.synced_folder "app", "/home/vagrant/app"
+
    end 
  # creating first VM called web  
    config.vm.define "web" do |web|

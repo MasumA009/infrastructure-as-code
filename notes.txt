@@ -7,7 +7,38 @@ sudo ansible db -m copy -a "src=/etc/ansible/test1.txt dest=/home/vagrant
 https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html
 
 steps to install nginx:
+be in controller at location "/etc/ansible"
+create  file: "sudo nano config_nginx_web.yml"
+file:
+```
+# this is a playbook to install nginx in the web-server
+# indentation matters have 2  spaces
+# add 3 dashes "---" this starts the yaml file.
+---
+# add name of host 
+# since web wasnt working i will change to db
+- hosts: db
 
+
+# optional:
+# gather additional facts about setup:
+  gather_facts: yes
+
+
+# add admin access to this file (stops us from having to add sudo to every line)
+  become: true
+
+# add instructions/TASKS to add and install nginx
+  tasks:
+  - name: Installing Nginx
+    apt: pkg=nginx state=present
+
+# install nginx and enable nginx - ensure status is running.
+```
+
+to run a file: 
+
+sudo ansible-playbook config_nginx_web.yml
 
 
 
