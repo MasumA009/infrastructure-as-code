@@ -25,9 +25,9 @@ The best way to understand it is to explain it through an example,
 
 ![Alt text](images/Screenshot%202023-06-05%20135625.png)
 
-1. We (the devloper) can use something like vagrant to create virtual machines, 
+1. We (the devloper) can use something like vagrant to create virtual machines, we can then use ssh to connect to a controller. 
 
-2. 1 of these machines is called an Ansible controller. This is like the root node, only 1 device needs this installed as we can control all other virtual machines from here. We connect through it via ssh. 
+2. 1 of the machines we will make is called an Ansible controller. This is like the root node, only 1 device needs this installed as we can control all other virtual machines from here. We connect through it via ssh. 
 
 3. another machine is called the app machine/node, and the last machine is called the db machine/node. we can connect to these through passwords via the controller machine. 
 
