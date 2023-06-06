@@ -1,0 +1,14 @@
+adhoc commands:
+sudo ansible db -a "uname -a"
+sudo ansible db -a "date" - shows date
+sudo ansible db -a "free -m" - shows free memory
+sudo ansible all -a "la -a"  - shows all files from all nodes
+sudo ansible db -m copy -a "src=/etc/ansible/test1.txt dest=/home/vagrant
+https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html
+
+steps to install nginx:
+
+
+
+
+

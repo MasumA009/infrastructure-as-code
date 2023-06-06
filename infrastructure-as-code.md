@@ -54,6 +54,12 @@ vagrant ssh controller
 ```
 to get into the controller node. 
 
+update and upgrade it:
+```
+sudo apt update -y
+sudo apt upgrade -y
+```
+
 once in we can connect to the different nodes, i.e: the web and db. 
 
 # step 2: update the nodes
@@ -66,9 +72,15 @@ ssh vagrant@192.168.33.10
 the password is `vagrant` and is invisible.
 run:
 ```
-run sudo apt update -y 
+sudo apt update -y 
 ```
-to update. run `exit` to leave web.
+to update. 
+upgrade aswell:
+```
+sudo apt upgrade -y
+```
+
+run `exit` to leave web.
 
 Now update the db node: go in:
 ```
@@ -81,6 +93,11 @@ update:
 ```
 sudo apt update -y
 ```
+upgrade aswell:
+```
+sudo apt upgrade -y
+```
+
 
 ![Alt text](images/Screenshot%202023-06-05%20150044.png)
 
@@ -164,4 +181,16 @@ to get a PONG from the db we need to add a line to the hosts file:
 [db]
 192.168.33.11 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_pass=vagrant
 ```
+
+
+# 
+```
+sudo ansible db -a "uname -a"
+```
+```
+ sudo ansible db -a "date"
+```
+gives date
+
+
 
